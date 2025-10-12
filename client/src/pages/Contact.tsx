@@ -9,20 +9,20 @@ export default function Contact() {
     {
       icon: Mail,
       title: "Email Us",
-      details: "info@neovedic.com",
-      subdDetails: "support@neovedic.com",
+      details: "info@neovedicsoft.com",
+      subdDetails: "Get in touch with us",
     },
     {
       icon: Phone,
       title: "Call Us",
-      details: "+1 (555) 123-4567",
-      subdDetails: "+1 (555) 987-6543",
+      details: "+91 6378879085",
+      subdDetails: "+91 7976358875",
     },
     {
       icon: MapPin,
       title: "Visit Us",
-      details: "123 Innovation Drive",
-      subdDetails: "Tech Valley, CA 94025",
+      details: "Jagatpura, Jaipur",
+      subdDetails: "Rajasthan, India",
     },
     {
       icon: Clock,

@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { Github, Twitter, Linkedin, Mail } from "lucide-react";
+import { Linkedin, Mail, Instagram } from "lucide-react";
 
 export function Footer() {
   const footerSections = [
@@ -7,8 +7,9 @@ export function Footer() {
       title: "Company",
       links: [
         { label: "About Us", href: "#about" },
-        { label: "Our Services", href: "#services" },
-        { label: "Contact", href: "#contact" },
+        { label: "Portfolio", href: "/portfolio" },
+        { label: "Team", href: "/team" },
+        { label: "Career", href: "/career" },
       ],
     },
     {
@@ -21,20 +22,20 @@ export function Footer() {
       ],
     },
     {
-      title: "Resources",
+      title: "Support",
       links: [
-        { label: "Case Studies", href: "#" },
-        { label: "Blog", href: "#" },
-        { label: "Documentation", href: "#" },
+        { label: "Contact Us", href: "/contact" },
+        { label: "FAQ", href: "/faq" },
+        { label: "Privacy Policy", href: "#" },
+        { label: "Terms of Service", href: "#" },
       ],
     },
   ];
 
   const socialLinks = [
-    { icon: Github, href: "#", label: "GitHub" },
-    { icon: Twitter, href: "#", label: "Twitter" },
-    { icon: Linkedin, href: "#", label: "LinkedIn" },
-    { icon: Mail, href: "mailto:hello@neovedic.com", label: "Email" },
+    { icon: Linkedin, href: "https://www.linkedin.com/company/neovedic-software", label: "LinkedIn" },
+    { icon: Instagram, href: "https://www.instagram.com/neovedicsoft/", label: "Instagram" },
+    { icon: Mail, href: "mailto:info@neovedicsoft.com", label: "Email" },
   ];
 
   return (

@@ -66,19 +66,19 @@ export function ContactSection() {
     {
       icon: Mail,
       label: "Email",
-      value: "hello@neovedic.com",
-      href: "mailto:hello@neovedic.com",
+      value: "info@neovedicsoft.com",
+      href: "mailto:info@neovedicsoft.com",
     },
     {
       icon: Phone,
       label: "Phone",
-      value: "+1 (555) 123-4567",
-      href: "tel:+15551234567",
+      value: "+91 6378879085",
+      href: "tel:+916378879085",
     },
     {
       icon: MapPin,
       label: "Office",
-      value: "San Francisco, CA",
+      value: "Jagatpura, Jaipur, Rajasthan, India",
       href: null,
     },
   ];

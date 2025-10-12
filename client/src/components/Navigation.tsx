@@ -25,9 +25,10 @@ export function Navigation() {
 
   const navLinks = [
     { href: "/", label: "Home" },
-    { href: "/clients", label: "Clients" },
+    { href: "/portfolio", label: "Portfolio" },
+    { href: "/team", label: "Team" },
     { href: "/career", label: "Career" },
-    { href: "/hire-resources", label: "Hire Resources" },
+    { href: "/faq", label: "FAQ" },
   ];
 
   const serviceLinks = [
