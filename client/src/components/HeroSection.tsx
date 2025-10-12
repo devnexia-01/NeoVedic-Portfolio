@@ -1,75 +1,69 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Sparkles, Building2, TrendingUp, Shield } from "lucide-react";
+import { Link } from "wouter";
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/20 via-background to-background" />
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-100/40 via-transparent to-transparent" />
       
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-gradient-to-br from-blue-500 to-purple-600 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-gradient-to-br from-purple-500 to-pink-600 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1.5s" }} />
-        <div className="absolute top-1/2 left-1/2 w-[400px] h-[400px] bg-gradient-to-br from-cyan-500 to-blue-600 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "3s" }} />
-      </div>
+      <div className="relative max-w-7xl mx-auto px-6 py-20 md:py-32 w-full">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          <div className="space-y-8" data-testid="hero-content">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1]">
+              <span className="text-gray-900">
+                Transform Next-Gen IT
+                <br />
+                Needs With
+              </span>
+              <br />
+              <span className="bg-gradient-to-r from-orange-500 via-orange-400 to-orange-500 bg-clip-text text-transparent">
+                AI-First Digital Partner
+              </span>
+            </h1>
 
-      <div className="relative max-w-7xl mx-auto px-6 py-20 md:py-32">
-        <div className="text-center max-w-5xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-primary/10 via-purple-500/10 to-pink-500/10 border border-primary/30 mb-8 backdrop-blur-sm" data-testid="badge-hero-tag">
-            <Sparkles className="w-4 h-4 text-primary" />
-            <span className="text-sm font-semibold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
-              Enterprise-Grade IT Solutions
-            </span>
+            <p className="text-lg md:text-xl text-gray-600 max-w-xl leading-relaxed">
+              We are global IT disruptors leveraging AI-powered capabilities to build
+              an ecosystem that takes innovation a step ahead.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button 
+                size="lg" 
+                asChild 
+                className="bg-blue-900 hover:bg-blue-800 text-white px-8 py-6 text-base font-semibold rounded-full"
+                data-testid="button-hero-speak-expert"
+              >
+                <Link href="/contact">Speak With Expert</Link>
+              </Button>
+            </div>
           </div>
 
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 leading-[1.1]">
-            <span className="bg-gradient-to-r from-foreground via-foreground to-muted-foreground bg-clip-text text-transparent">
-              Elevate Your Business
-            </span>
-            <br />
-            <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-              Through Technology
-            </span>
-          </h1>
-
-          <p className="text-lg md:text-2xl text-muted-foreground max-w-4xl mx-auto mb-12 leading-relaxed">
-            NeoVedic delivers world-class <span className="font-semibold text-foreground">DevOps automation</span>, 
-            <span className="font-semibold text-foreground"> enterprise web development</span>, and 
-            <span className="font-semibold text-foreground"> ERP solutions</span> that transform businesses. 
-            From startups to Fortune 500 companies, we build technology that scales.
-          </p>
-
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-5 mb-16">
-            <Button size="lg" asChild className="gap-2 group px-8 py-6 text-base" data-testid="button-hero-explore-services">
-              <a href="#services">
-                Explore Our Services
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </a>
-            </Button>
-            <Button size="lg" variant="outline" asChild className="backdrop-blur-sm px-8 py-6 text-base" data-testid="button-hero-get-in-touch">
-              <a href="#contact">Schedule Consultation</a>
-            </Button>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-12 border-t border-border/50">
-            {[
-              { label: "Projects Delivered", value: "500+", icon: Building2, testId: "stat-projects" },
-              { label: "Happy Clients", value: "200+", icon: TrendingUp, testId: "stat-clients" },
-              { label: "Team Experts", value: "50+", icon: Shield, testId: "stat-team" },
-              { label: "Success Rate", value: "98%", icon: Sparkles, testId: "stat-success" },
-            ].map((stat) => {
-              const Icon = stat.icon;
-              return (
-                <div key={stat.label} className="text-center group hover:scale-105 transition-transform" data-testid={stat.testId}>
-                  <div className="flex items-center justify-center mb-3">
-                    <Icon className="w-5 h-5 text-primary/60 group-hover:text-primary transition-colors" />
+          <div className="relative flex items-center justify-center lg:justify-end" data-testid="hero-animation">
+            <div className="relative w-full max-w-md aspect-square">
+              <div className="absolute inset-0 flex items-center justify-center animate-float">
+                <div className="relative w-80 h-80 md:w-96 md:h-96">
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600 opacity-90 blur-2xl animate-pulse" />
+                  
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-blue-600 via-purple-600 to-blue-700 opacity-80 blur-xl" 
+                       style={{ clipPath: 'ellipse(50% 40% at 50% 60%)' }} />
+                  
+                  <div className="absolute inset-8 rounded-full bg-gradient-to-br from-orange-300 via-purple-400 to-blue-500 shadow-2xl">
+                    <div className="absolute inset-0 rounded-full bg-gradient-to-tl from-transparent via-white/20 to-white/40" />
+                    
+                    <div className="absolute top-1/4 left-1/4 w-20 h-20 rounded-full bg-white/40 blur-xl" />
+                    <div className="absolute bottom-1/3 right-1/3 w-16 h-16 rounded-full bg-white/30 blur-lg" />
+                    
+                    <div className="absolute inset-0 rounded-full" 
+                         style={{
+                           background: 'linear-gradient(135deg, rgba(255,255,255,0.4) 0%, transparent 50%, rgba(0,0,0,0.2) 100%)',
+                         }} />
                   </div>
-                  <div className="text-3xl md:text-5xl font-bold bg-gradient-to-r from-primary via-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
-                    {stat.value}
-                  </div>
-                  <div className="text-sm md:text-base text-muted-foreground font-medium">{stat.label}</div>
+
+                  <div className="absolute -inset-4 rounded-full bg-gradient-to-br from-orange-400/20 via-purple-500/20 to-blue-600/20 blur-3xl animate-pulse" 
+                       style={{ animationDelay: '1s', animationDuration: '3s' }} />
                 </div>
-              );
-            })}
+              </div>
+            </div>
           </div>
         </div>
       </div>
