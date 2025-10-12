@@ -140,7 +140,7 @@ export function ContactSection() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Service Interest</FormLabel>
-                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <Select onValueChange={field.onChange} value={field.value}>
                           <FormControl>
                             <SelectTrigger data-testid="select-contact-service">
                               <SelectValue placeholder="Select a service" />
