@@ -41,23 +41,23 @@ const values = [
   },
 ];
 
-const techIcons: Record<string, any> = {
-  "React": SiReact,
-  "Next.js": SiNextdotjs,
-  "TypeScript": SiTypescript,
-  "Tailwind CSS": SiTailwindcss,
-  "Node.js": SiNodedotjs,
-  "Python": SiPython,
-  "PostgreSQL": SiPostgresql,
-  "MongoDB": SiMongodb,
-  "AWS": SiAmazon,
-  "Azure": Cloud,
-  "Google Cloud": SiGooglecloud,
-  "Kubernetes": SiKubernetes,
-  "Docker": SiDocker,
-  "Jenkins": SiJenkins,
-  "GitHub Actions": SiGithubactions,
-  "Terraform": SiTerraform,
+const techIcons: Record<string, { icon: any; color: string }> = {
+  "React": { icon: SiReact, color: "#61DAFB" },
+  "Next.js": { icon: SiNextdotjs, color: "#000000" },
+  "TypeScript": { icon: SiTypescript, color: "#3178C6" },
+  "Tailwind CSS": { icon: SiTailwindcss, color: "#06B6D4" },
+  "Node.js": { icon: SiNodedotjs, color: "#339933" },
+  "Python": { icon: SiPython, color: "#3776AB" },
+  "PostgreSQL": { icon: SiPostgresql, color: "#4169E1" },
+  "MongoDB": { icon: SiMongodb, color: "#47A248" },
+  "AWS": { icon: SiAmazon, color: "#FF9900" },
+  "Azure": { icon: Cloud, color: "#0078D4" },
+  "Google Cloud": { icon: SiGooglecloud, color: "#4285F4" },
+  "Kubernetes": { icon: SiKubernetes, color: "#326CE5" },
+  "Docker": { icon: SiDocker, color: "#2496ED" },
+  "Jenkins": { icon: SiJenkins, color: "#D24939" },
+  "GitHub Actions": { icon: SiGithubactions, color: "#2088FF" },
+  "Terraform": { icon: SiTerraform, color: "#7B42BC" },
 };
 
 const technologies = [
@@ -105,10 +105,12 @@ export function AboutSection() {
                 <h4 className="text-lg font-semibold mb-4 text-primary">{tech.category}</h4>
                 <ul className="space-y-3">
                   {tech.tools.map((tool) => {
-                    const Icon = techIcons[tool];
+                    const techIcon = techIcons[tool];
+                    if (!techIcon) return null;
+                    const Icon = techIcon.icon;
                     return (
                       <li key={tool} className="flex items-center gap-3 text-sm text-muted-foreground">
-                        {Icon && <Icon className="w-5 h-5 text-primary" />}
+                        <Icon className="w-5 h-5" style={{ color: techIcon.color }} />
                         {tool}
                       </li>
                     );
