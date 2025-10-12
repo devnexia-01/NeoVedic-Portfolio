@@ -1,0 +1,93 @@
+# NeoVedic - Premium IT Solutions Company Website
+
+## Overview
+A fashionable, premium company website for NeoVedic, offering IT solutions in Web Development, DevOps, Cloud Infrastructure, and Digital Marketing. The design is inspired by modern tech companies like DianApps, featuring bold gradients, smooth animations, and professional typography.
+
+## Project Structure
+
+### Frontend (React + TypeScript + Tailwind)
+- **Home Page** (`/`): Hero section with animations, services overview, stats, about section, and contact form
+- **Service Pages**:
+  - Web Development (`/services/web-development`)
+  - DevOps (`/services/devops`)
+  - Cloud Infrastructure (`/services/cloud`)
+  - Digital Marketing (`/services/marketing`)
+
+### Key Components
+- `Navigation.tsx` - Sticky header with blur backdrop, responsive mobile menu
+- `HeroSection.tsx` - Full-screen hero with gradient animations and stats
+- `ServicesSection.tsx` - Service cards with hover effects
+- `AboutSection.tsx` - Company values and technology stack
+- `ContactSection.tsx` - Contact form with validation
+- `Footer.tsx` - Multi-column footer with social links
+
+### Backend (Express + TypeScript)
+- Contact form submission endpoint (`POST /api/contact`)
+- In-memory storage for contact submissions
+- Zod validation for form data
+
+## Design System
+
+### Colors
+- Primary: Purple-blue gradient (260° hue)
+- Secondary gradients for services:
+  - Web Dev: Blue to Cyan
+  - DevOps: Purple to Pink
+  - Cloud: Emerald to Teal
+  - Marketing: Orange to Red
+
+### Typography
+- Font Family: Inter (sans-serif), Space Grotesk (mono/accents)
+- Scale: text-5xl to text-8xl for headlines
+
+### Key Features
+- Smooth scroll behavior
+- Gradient text effects using background-clip
+- Hover elevation system from index.css
+- Responsive grid layouts
+- Mobile-first design
+
+## Technology Stack
+
+### Frontend
+- React 18
+- TypeScript
+- Tailwind CSS
+- Wouter (routing)
+- React Hook Form + Zod (forms)
+- Shadcn UI components
+
+### Backend
+- Express.js
+- TypeScript
+- In-memory storage (MemStorage)
+
+## Development
+
+### Running the Application
+```bash
+npm run dev
+```
+Starts both frontend (Vite) and backend (Express) on the same port.
+
+### Key Routes
+- `/` - Home page
+- `/services/web-development` - Web Development service page
+- `/services/devops` - DevOps service page
+- `/services/cloud` - Cloud Infrastructure service page
+- `/services/marketing` - Digital Marketing service page
+
+## Recent Changes
+- **2025-10-12**: Initial implementation with complete frontend and backend
+  - Created all service pages with detailed content
+  - Implemented contact form with backend integration
+  - Designed premium UI with gradients and animations
+  - Added responsive navigation and footer
+  - Set up proper SEO metadata
+
+## User Preferences
+- Fashionable, modern design inspired by DianApps
+- Bold gradients and animations
+- Professional typography
+- Comprehensive service pages with detailed information
+- Premium aesthetic with glassmorphism effects
