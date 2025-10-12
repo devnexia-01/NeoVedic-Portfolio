@@ -2,9 +2,88 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Briefcase, Users, TrendingUp, Heart, ArrowRight, MapPin, Clock, DollarSign } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useToast } from "@/hooks/use-toast";
+import { Briefcase, Users, TrendingUp, Heart, ArrowRight, MapPin, Clock, DollarSign, Upload } from "lucide-react";
+import { useState, useRef } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { insertJobApplicationSchema, type InsertJobApplication } from "@shared/schema";
+import { useMutation } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
 
 export default function Career() {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const { toast } = useToast();
+
+  const form = useForm<InsertJobApplication>({
+    resolver: zodResolver(insertJobApplicationSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      phone: "",
+      position: "",
+      experience: "",
+      resumeUrl: "",
+      coverLetter: "",
+    },
+  });
+
+  const applicationMutation = useMutation({
+    mutationFn: async (data: InsertJobApplication) => {
+      const res = await apiRequest("POST", "/api/job-applications", data);
+      return await res.json();
+    },
+    onSuccess: () => {
+      toast({
+        title: "Application Submitted!",
+        description: "We've received your application and will review it shortly.",
+      });
+      form.reset();
+      setSelectedFile(null);
+      setIsDialogOpen(false);
+    },
+    onError: () => {
+      toast({
+        title: "Submission Failed",
+        description: "There was an error submitting your application. Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        toast({
+          title: "File too large",
+          description: "Please select a file smaller than 5MB.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result as string;
+        form.setValue("resumeUrl", base64String);
+        setSelectedFile(file);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const onSubmit = (data: InsertJobApplication) => {
+    applicationMutation.mutate(data);
+  };
+
   const benefits = [
     {
       icon: DollarSign,
@@ -184,7 +263,12 @@ export default function Career() {
             <p className="text-xl md:text-2xl text-muted-foreground mb-12 leading-relaxed">
               We're always on the lookout for exceptional talent. Send us your resume and we'll keep you in mind for future opportunities.
             </p>
-            <Button size="lg" className="px-10 py-6 text-lg">
+            <Button 
+              size="lg" 
+              className="px-10 py-6 text-lg"
+              onClick={() => setIsDialogOpen(true)}
+              data-testid="button-submit-resume"
+            >
               <span className="flex items-center gap-2">
                 Submit Your Resume
                 <ArrowRight className="w-5 h-5" />
@@ -195,6 +279,210 @@ export default function Career() {
       </main>
 
       <Footer />
+
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-2xl">Submit Your Application</DialogTitle>
+            <DialogDescription>
+              Fill out the form below and upload your resume. We'll get back to you soon!
+            </DialogDescription>
+          </DialogHeader>
+
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Full Name *</FormLabel>
+                    <FormControl>
+                      <Input 
+                        placeholder="John Doe" 
+                        {...field} 
+                        data-testid="input-name"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email Address *</FormLabel>
+                    <FormControl>
+                      <Input 
+                        type="email" 
+                        placeholder="john@example.com" 
+                        {...field}
+                        data-testid="input-email"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="phone"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Phone Number *</FormLabel>
+                    <FormControl>
+                      <Input 
+                        type="tel" 
+                        placeholder="+91 9876543210" 
+                        {...field}
+                        data-testid="input-phone"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="position"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Position Applied For *</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger data-testid="select-position">
+                          <SelectValue placeholder="Select a position" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="Senior Full Stack Developer">Senior Full Stack Developer</SelectItem>
+                        <SelectItem value="DevOps Engineer">DevOps Engineer</SelectItem>
+                        <SelectItem value="UI/UX Designer">UI/UX Designer</SelectItem>
+                        <SelectItem value="Digital Marketing Specialist">Digital Marketing Specialist</SelectItem>
+                        <SelectItem value="Cloud Solutions Architect">Cloud Solutions Architect</SelectItem>
+                        <SelectItem value="Product Manager">Product Manager</SelectItem>
+                        <SelectItem value="Other">Other</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="experience"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Years of Experience *</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger data-testid="select-experience">
+                          <SelectValue placeholder="Select experience level" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="0-1">0-1 years (Entry Level)</SelectItem>
+                        <SelectItem value="1-3">1-3 years</SelectItem>
+                        <SelectItem value="3-5">3-5 years</SelectItem>
+                        <SelectItem value="5-8">5-8 years</SelectItem>
+                        <SelectItem value="8+">8+ years (Senior Level)</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="resumeUrl"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Resume *</FormLabel>
+                    <FormControl>
+                      <div className="space-y-2">
+                        <input
+                          type="file"
+                          ref={fileInputRef}
+                          onChange={handleFileChange}
+                          accept=".pdf,.doc,.docx"
+                          className="hidden"
+                          data-testid="input-resume-file"
+                        />
+                        <Button
+                          type="button"
+                          variant="outline"
+                          onClick={() => fileInputRef.current?.click()}
+                          className="w-full"
+                          data-testid="button-upload-resume"
+                        >
+                          <Upload className="w-4 h-4 mr-2" />
+                          {selectedFile ? selectedFile.name : "Upload Resume (PDF, DOC, DOCX - Max 5MB)"}
+                        </Button>
+                        {selectedFile && (
+                          <p className="text-sm text-muted-foreground" data-testid="text-file-name">
+                            Selected: {selectedFile.name} ({(selectedFile.size / 1024).toFixed(2)} KB)
+                          </p>
+                        )}
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="coverLetter"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Cover Letter (Optional)</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Tell us why you'd be a great fit for this position..."
+                        className="min-h-[120px]"
+                        {...field}
+                        data-testid="input-cover-letter"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <div className="flex gap-4">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => {
+                    setIsDialogOpen(false);
+                    form.reset();
+                    setSelectedFile(null);
+                  }}
+                  className="flex-1"
+                  data-testid="button-cancel"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="submit"
+                  disabled={applicationMutation.isPending}
+                  className="flex-1"
+                  data-testid="button-submit-application"
+                >
+                  {applicationMutation.isPending ? "Submitting..." : "Submit Application"}
+                </Button>
+              </div>
+            </form>
+          </Form>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

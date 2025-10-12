@@ -1,16 +1,19 @@
-import { type ContactSubmission, type InsertContactSubmission } from "@shared/schema";
+import { type ContactSubmission, type InsertContactSubmission, type JobApplication, type InsertJobApplication } from "@shared/schema";
 import { randomUUID } from "crypto";
 
 export interface IStorage {
   createContactSubmission(submission: InsertContactSubmission): Promise<ContactSubmission>;
   getAllContactSubmissions(): Promise<ContactSubmission[]>;
+  createJobApplication(application: InsertJobApplication): Promise<JobApplication>;
 }
 
 export class MemStorage implements IStorage {
   private contactSubmissions: Map<string, ContactSubmission>;
+  private jobApplications: Map<string, JobApplication>;
 
   constructor() {
     this.contactSubmissions = new Map();
+    this.jobApplications = new Map();
   }
 
   async createContactSubmission(insertSubmission: InsertContactSubmission): Promise<ContactSubmission> {
@@ -26,6 +29,18 @@ export class MemStorage implements IStorage {
 
   async getAllContactSubmissions(): Promise<ContactSubmission[]> {
     return Array.from(this.contactSubmissions.values());
+  }
+
+  async createJobApplication(insertApplication: InsertJobApplication): Promise<JobApplication> {
+    const id = randomUUID();
+    const application: JobApplication = {
+      ...insertApplication,
+      id,
+      coverLetter: insertApplication.coverLetter ?? null,
+      createdAt: new Date(),
+    };
+    this.jobApplications.set(id, application);
+    return application;
   }
 }
 

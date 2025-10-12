@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertContactSubmissionSchema } from "@shared/schema";
+import { insertContactSubmissionSchema, insertJobApplicationSchema } from "@shared/schema";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/contact", async (req, res) => {
@@ -23,6 +23,50 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error: any) {
       res.status(500).json({ 
         error: error.message || "Failed to fetch submissions" 
+      });
+    }
+  });
+
+  app.post("/api/job-applications", async (req, res) => {
+    try {
+      const validatedData = insertJobApplicationSchema.parse(req.body);
+      
+      if (validatedData.resumeUrl) {
+        const base64Match = validatedData.resumeUrl.match(/^data:([^;]+);base64,(.+)$/);
+        if (!base64Match) {
+          return res.status(400).json({ 
+            error: "Invalid resume format. File must be a valid data URL" 
+          });
+        }
+        
+        const mimeType = base64Match[1];
+        const base64Data = base64Match[2];
+        
+        const allowedTypes = [
+          'application/pdf',
+          'application/msword',
+          'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+        ];
+        
+        if (!allowedTypes.includes(mimeType)) {
+          return res.status(400).json({ 
+            error: "Invalid file type. Only PDF, DOC, and DOCX files are allowed" 
+          });
+        }
+        
+        const sizeInMB = (base64Data.length * 0.75) / (1024 * 1024);
+        if (sizeInMB > 5) {
+          return res.status(400).json({ 
+            error: "Resume file size exceeds 5MB limit" 
+          });
+        }
+      }
+      
+      const application = await storage.createJobApplication(validatedData);
+      res.json({ success: true, id: application.id });
+    } catch (error: any) {
+      res.status(400).json({ 
+        error: error.message || "Invalid application data" 
       });
     }
   });
