@@ -1,5 +1,22 @@
 import { Card } from "@/components/ui/card";
-import { Award, Users, Zap, Target } from "lucide-react";
+import { Award, Users, Zap, Target, Cloud } from "lucide-react";
+import { 
+  SiReact, 
+  SiNextdotjs, 
+  SiTypescript, 
+  SiTailwindcss, 
+  SiNodedotjs, 
+  SiPython, 
+  SiPostgresql, 
+  SiMongodb, 
+  SiAmazon, 
+  SiGooglecloud, 
+  SiKubernetes, 
+  SiDocker, 
+  SiJenkins, 
+  SiGithubactions, 
+  SiTerraform 
+} from "react-icons/si";
 
 const values = [
   {
@@ -23,6 +40,25 @@ const values = [
     description: "We focus on measurable outcomes that drive real business value.",
   },
 ];
+
+const techIcons: Record<string, any> = {
+  "React": SiReact,
+  "Next.js": SiNextdotjs,
+  "TypeScript": SiTypescript,
+  "Tailwind CSS": SiTailwindcss,
+  "Node.js": SiNodedotjs,
+  "Python": SiPython,
+  "PostgreSQL": SiPostgresql,
+  "MongoDB": SiMongodb,
+  "AWS": SiAmazon,
+  "Azure": Cloud,
+  "Google Cloud": SiGooglecloud,
+  "Kubernetes": SiKubernetes,
+  "Docker": SiDocker,
+  "Jenkins": SiJenkins,
+  "GitHub Actions": SiGithubactions,
+  "Terraform": SiTerraform,
+};
 
 const technologies = [
   { category: "Frontend", tools: ["React", "Next.js", "TypeScript", "Tailwind CSS"] },
@@ -67,13 +103,16 @@ export function AboutSection() {
             {technologies.map((tech) => (
               <div key={tech.category} data-testid={`tech-stack-${tech.category.toLowerCase()}`}>
                 <h4 className="text-lg font-semibold mb-4 text-primary">{tech.category}</h4>
-                <ul className="space-y-2">
-                  {tech.tools.map((tool) => (
-                    <li key={tool} className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <div className="w-1.5 h-1.5 rounded-full bg-chart-2" />
-                      {tool}
-                    </li>
-                  ))}
+                <ul className="space-y-3">
+                  {tech.tools.map((tool) => {
+                    const Icon = techIcons[tool];
+                    return (
+                      <li key={tool} className="flex items-center gap-3 text-sm text-muted-foreground">
+                        {Icon && <Icon className="w-5 h-5 text-primary" />}
+                        {tool}
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             ))}
