@@ -8,9 +8,9 @@ export function HeroSection() {
       
       <div className="relative max-w-7xl mx-auto px-6 py-20 md:py-32 w-full">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          <div className="space-y-8" data-testid="hero-content">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-              <span className="text-gray-900">
+          <div className="space-y-6" data-testid="hero-content">
+            <h1 className="text-[32px] md:text-[50px] lg:text-[56px] leading-[44px] md:leading-[64px] lg:leading-[72px] font-medium tracking-tight">
+              <span className="text-[#060821]">
                 Transform Next-Gen IT
                 <br />
                 Needs With
@@ -19,7 +19,7 @@ export function HeroSection() {
               <span className="text-orange-500">
                 AI-First Digital{" "}
               </span>
-              <span className="text-blue-900">
+              <span className="text-[#060821]">
                 Partner
               </span>
             </h1>
