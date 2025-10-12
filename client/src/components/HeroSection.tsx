@@ -9,19 +9,22 @@ export function HeroSection() {
       <div className="relative max-w-7xl mx-auto px-6 py-20 md:py-32 w-full">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           <div className="space-y-8" data-testid="hero-content">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1]">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
               <span className="text-gray-900">
                 Transform Next-Gen IT
                 <br />
                 Needs With
               </span>
               <br />
-              <span className="bg-gradient-to-r from-orange-500 via-orange-400 to-orange-500 bg-clip-text text-transparent">
-                AI-First Digital Partner
+              <span className="text-orange-500">
+                AI-First Digital{" "}
+              </span>
+              <span className="text-blue-900">
+                Partner
               </span>
             </h1>
 
-            <p className="text-lg md:text-xl text-gray-600 max-w-xl leading-relaxed">
+            <p className="text-base md:text-lg text-gray-600 max-w-xl leading-relaxed">
               We are global IT disruptors leveraging AI-powered capabilities to build
               an ecosystem that takes innovation a step ahead.
             </p>
