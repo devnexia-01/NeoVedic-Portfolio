@@ -25,8 +25,9 @@ export function Navigation() {
 
   const navLinks = [
     { href: "/", label: "Home" },
-    { href: "#about", label: "About" },
-    { href: "#contact", label: "Contact" },
+    { href: "/clients", label: "Clients" },
+    { href: "/career", label: "Career" },
+    { href: "/hire-resources", label: "Hire Resources" },
   ];
 
   const serviceLinks = [
@@ -57,14 +58,15 @@ export function Navigation() {
 
           <nav className="hidden lg:flex items-center gap-8">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.href}
                 href={link.href}
-                data-testid={`link-nav-${link.label.toLowerCase().replace(" ", "-")}`}
-                className="text-base font-semibold text-muted-foreground hover:text-foreground transition-colors"
+                data-testid={`link-nav-${link.label.toLowerCase().replace(/\s/g, "-")}`}
               >
-                {link.label}
-              </a>
+                <span className="text-base font-semibold text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
+                  {link.label}
+                </span>
+              </Link>
             ))}
             
             <div 
@@ -82,11 +84,24 @@ export function Navigation() {
               
               {isServicesOpen && (
                 <div className="absolute top-full left-0 mt-2 w-72 bg-background/95 backdrop-blur-xl border border-border rounded-xl shadow-2xl p-3">
+                  <Link href="/services">
+                    <div 
+                      className="px-4 py-3 rounded-lg hover:bg-muted/50 transition-colors cursor-pointer group mb-2 border-b border-border pb-3"
+                      data-testid="link-dropdown-all-services"
+                    >
+                      <div className="font-bold text-foreground group-hover:text-primary transition-colors">
+                        View All Services
+                      </div>
+                      <div className="text-sm text-muted-foreground">
+                        Explore our complete service offerings
+                      </div>
+                    </div>
+                  </Link>
                   {serviceLinks.map((link) => (
                     <Link key={link.href} href={link.href}>
                       <div 
                         className="px-4 py-3 rounded-lg hover:bg-muted/50 transition-colors cursor-pointer group"
-                        data-testid={`link-dropdown-${link.label.toLowerCase().replace(" ", "-")}`}
+                        data-testid={`link-dropdown-${link.label.toLowerCase().replace(/\s/g, "-")}`}
                       >
                         <div className="font-semibold text-foreground group-hover:text-primary transition-colors">
                           {link.label}
@@ -103,8 +118,8 @@ export function Navigation() {
           </nav>
 
           <div className="hidden lg:flex items-center gap-4">
-            <Button size="lg" asChild className="font-semibold" data-testid="button-get-quote">
-              <a href="#contact">Get a Quote</a>
+            <Button size="lg" asChild className="font-semibold" data-testid="button-contact">
+              <Link href="/contact">Contact Us</Link>
             </Button>
           </div>
 
@@ -122,22 +137,25 @@ export function Navigation() {
         <div className="lg:hidden border-t border-border bg-background/98 backdrop-blur-xl">
           <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col gap-4">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.href}
                 href={link.href}
-                data-testid={`link-mobile-${link.label.toLowerCase().replace(" ", "-")}`}
-                className="text-base font-semibold text-muted-foreground hover:text-foreground transition-colors py-2"
+                data-testid={`link-mobile-${link.label.toLowerCase().replace(/\s/g, "-")}`}
               >
-                {link.label}
-              </a>
+                <span className="text-base font-semibold text-muted-foreground hover:text-foreground transition-colors py-2 block">
+                  {link.label}
+                </span>
+              </Link>
             ))}
             <div className="pt-4 border-t border-border">
-              <p className="text-sm font-bold text-foreground mb-3">Our Services</p>
+              <Link href="/services">
+                <p className="text-sm font-bold text-foreground mb-3">Services</p>
+              </Link>
               {serviceLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  data-testid={`link-mobile-service-${link.label.toLowerCase().replace(" ", "-")}`}
+                  data-testid={`link-mobile-service-${link.label.toLowerCase().replace(/\s/g, "-")}`}
                 >
                   <div className="py-3 px-3 rounded-lg hover:bg-muted/50 transition-colors">
                     <div className="font-semibold text-foreground">{link.label}</div>
@@ -146,8 +164,8 @@ export function Navigation() {
                 </Link>
               ))}
             </div>
-            <Button size="lg" className="w-full mt-2 font-semibold" asChild data-testid="button-mobile-get-quote">
-              <a href="#contact">Get a Quote</a>
+            <Button size="lg" className="w-full mt-2 font-semibold" asChild data-testid="button-mobile-contact">
+              <Link href="/contact">Contact Us</Link>
             </Button>
           </div>
         </div>
