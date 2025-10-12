@@ -25,8 +25,7 @@ export function HeroSection() {
             </h1>
 
             <p className="text-base md:text-lg text-gray-600 max-w-xl leading-relaxed">
-              We are global IT disruptors leveraging AI-powered capabilities to build
-              an ecosystem that takes innovation a step ahead.
+              Crafting Intelligent Solutions That Drive Business Growth.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
