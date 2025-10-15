@@ -12,6 +12,14 @@ A fashionable, premium company website for NeoVedic, offering IT solutions in We
   - DevOps (`/services/devops`)
   - Cloud Infrastructure (`/services/cloud`)
   - Digital Marketing (`/services/marketing`)
+- **Additional Pages**:
+  - FAQ (`/faq`) - Frequently asked questions with accordion UI
+  - Team (`/team`) - Leadership team showcase
+  - Career (`/career`) - Job listings and application form
+  - Contact (`/contact`) - Contact form
+  - Services (`/services`) - Services overview
+  - Clients (`/clients`) - Client showcase
+  - Hire Resources (`/hire-resources`) - Resource augmentation
 
 ### Key Components
 - `Navigation.tsx` - Sticky header with blur backdrop, responsive mobile menu
@@ -21,10 +29,13 @@ A fashionable, premium company website for NeoVedic, offering IT solutions in We
 - `ContactSection.tsx` - Contact form with validation
 - `Footer.tsx` - Multi-column footer with social links
 
-### Backend (Express + TypeScript)
+### Backend (Express + TypeScript + MongoDB)
 - Contact form submission endpoint (`POST /api/contact`)
+- Job application submission endpoint (`POST /api/job-applications`)
+- MongoDB integration for persistent storage of career applications
 - In-memory storage for contact submissions
 - Zod validation for form data
+- Resume file handling (base64 encoded, max 5MB, PDF/DOC/DOCX)
 
 ## Design System
 
@@ -60,7 +71,8 @@ A fashionable, premium company website for NeoVedic, offering IT solutions in We
 ### Backend
 - Express.js
 - TypeScript
-- In-memory storage (MemStorage)
+- MongoDB with Mongoose (career applications)
+- In-memory storage (MemStorage for contact forms)
 
 ## Development
 
@@ -72,12 +84,27 @@ Starts both frontend (Vite) and backend (Express) on the same port.
 
 ### Key Routes
 - `/` - Home page
+- `/faq` - FAQ page
+- `/team` - Team page (leadership)
+- `/career` - Career opportunities and job application
+- `/services` - Services overview
 - `/services/web-development` - Web Development service page
 - `/services/devops` - DevOps service page
 - `/services/cloud` - Cloud Infrastructure service page
 - `/services/marketing` - Digital Marketing service page
+- `/contact` - Contact page
+- `/clients` - Clients showcase
+- `/hire-resources` - Resource augmentation
 
 ## Recent Changes
+- **2025-10-15**: MongoDB Integration & New Pages
+  - Added FAQ page with accordion UI and comprehensive Q&A
+  - Created Team page showcasing leadership (Manish Sharma - CEO, Himanshu Bhargava - CTO, Prerak Khunteta - CMO)
+  - Integrated MongoDB for persistent storage of career applications
+  - Set up Mongoose models and connection with secure secret management
+  - Enhanced error handling for API routes (proper 400/500 status codes)
+  - Career application form now saves to MongoDB with resume file support
+
 - **2025-10-12**: Transformed to multi-page architecture with dashboard hero design
   - Created dedicated pages: Services, Contact, Career, Clients, Hire Resources
   - Redesigned hero section with animated 3D ball (floating up/down animation)
