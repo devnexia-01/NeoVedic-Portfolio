@@ -4,6 +4,7 @@ import { storage } from "./storage";
 import { insertContactSubmissionSchema, insertJobApplicationSchema } from "@shared/schema";
 import { connectToMongoDB } from "./db/mongodb";
 import { JobApplication } from "./db/models/JobApplication";
+import { Blog } from "./db/models/Blog";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/contact", async (req, res) => {
@@ -101,6 +102,39 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.error('Error fetching applications:', error);
       res.status(500).json({ 
         error: error.message || "Failed to fetch applications" 
+      });
+    }
+  });
+
+  app.get("/api/blogs", async (_req, res) => {
+    try {
+      await connectToMongoDB();
+      const blogs = await Blog.find().sort({ publishedAt: -1 });
+      res.json(blogs);
+    } catch (error: any) {
+      console.error('Error fetching blogs:', error);
+      res.status(500).json({ 
+        error: error.message || "Failed to fetch blogs" 
+      });
+    }
+  });
+
+  app.get("/api/blogs/:slug", async (req, res) => {
+    try {
+      await connectToMongoDB();
+      const blog = await Blog.findOne({ slug: req.params.slug });
+      
+      if (!blog) {
+        return res.status(404).json({ 
+          error: "Blog not found" 
+        });
+      }
+      
+      res.json(blog);
+    } catch (error: any) {
+      console.error('Error fetching blog:', error);
+      res.status(500).json({ 
+        error: error.message || "Failed to fetch blog" 
       });
     }
   });
