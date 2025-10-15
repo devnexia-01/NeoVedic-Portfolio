@@ -79,8 +79,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({ success: true, id: String(application._id) });
     } catch (error: any) {
       console.error('Job application error:', error);
-      res.status(400).json({ 
-        error: error.message || "Invalid application data" 
+      
+      if (error.name === 'ZodError') {
+        return res.status(400).json({ 
+          error: error.message || "Invalid application data" 
+        });
+      }
+      
+      res.status(500).json({ 
+        error: "Failed to process application. Please try again later." 
       });
     }
   });
