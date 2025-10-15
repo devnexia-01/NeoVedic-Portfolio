@@ -15,6 +15,8 @@ A fashionable, premium company website for NeoVedic, offering IT solutions in We
 - **Additional Pages**:
   - FAQ (`/faq`) - Frequently asked questions with accordion UI
   - Team (`/team`) - Leadership team showcase
+  - Blog (`/blog`) - Blog listing page with all blog posts
+  - Blog Detail (`/blog/:slug`) - Individual blog post page
   - Career (`/career`) - Job listings and application form
   - Contact (`/contact`) - Contact form
   - Services (`/services`) - Services overview
@@ -32,10 +34,12 @@ A fashionable, premium company website for NeoVedic, offering IT solutions in We
 ### Backend (Express + TypeScript + MongoDB)
 - Contact form submission endpoint (`POST /api/contact`)
 - Job application submission endpoint (`POST /api/job-applications`)
-- MongoDB integration for persistent storage of career applications
+- Blog endpoints (`GET /api/blogs`, `GET /api/blogs/:slug`)
+- MongoDB integration for persistent storage of career applications and blog posts
 - In-memory storage for contact submissions
 - Zod validation for form data
-- Resume file handling (base64 encoded, max 5MB, PDF/DOC/DOCX)
+- Resume file handling (base64 encoded, max 10MB, PDF/DOC/DOCX)
+- Express body size limit increased to 10MB for file uploads
 
 ## Design System
 
@@ -86,6 +90,8 @@ Starts both frontend (Vite) and backend (Express) on the same port.
 - `/` - Home page
 - `/faq` - FAQ page
 - `/team` - Team page (leadership)
+- `/blog` - Blog listing page
+- `/blog/:slug` - Individual blog post page
 - `/career` - Career opportunities and job application
 - `/services` - Services overview
 - `/services/web-development` - Web Development service page
@@ -97,6 +103,15 @@ Starts both frontend (Vite) and backend (Express) on the same port.
 - `/hire-resources` - Resource augmentation
 
 ## Recent Changes
+- **2025-10-15**: Blog Section & Bug Fixes
+  - Implemented complete blog section with MongoDB integration
+  - Created Blog listing page (`/blog`) displaying all blog posts in grid layout
+  - Created Blog detail page (`/blog/:slug`) for individual blog posts
+  - Added Blog link to navigation menu
+  - Fixed "Apply Now" button functionality on Career page
+  - Fixed PayloadTooLargeError by increasing Express body size limit to 10MB
+  - Enhanced resume file upload handling (now supports up to 10MB files)
+
 - **2025-10-15**: MongoDB Integration & New Pages
   - Added FAQ page with accordion UI and comprehensive Q&A
   - Created Team page showcasing leadership (Manish Sharma - CEO, Himanshu Bhargava - CTO, Prerak Khunteta - CMO)
