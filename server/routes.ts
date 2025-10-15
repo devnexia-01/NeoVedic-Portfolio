@@ -2,6 +2,8 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertContactSubmissionSchema, insertJobApplicationSchema } from "@shared/schema";
+import { connectToMongoDB } from "./db/mongodb";
+import { JobApplication } from "./db/models/JobApplication";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/contact", async (req, res) => {
@@ -62,11 +64,36 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
       }
       
-      const application = await storage.createJobApplication(validatedData);
-      res.json({ success: true, id: application.id });
+      await connectToMongoDB();
+      
+      const application = await JobApplication.create({
+        name: validatedData.name,
+        email: validatedData.email,
+        phone: validatedData.phone,
+        position: validatedData.position,
+        experience: validatedData.experience,
+        resumeUrl: validatedData.resumeUrl,
+        coverLetter: validatedData.coverLetter,
+      });
+      
+      res.json({ success: true, id: String(application._id) });
     } catch (error: any) {
+      console.error('Job application error:', error);
       res.status(400).json({ 
         error: error.message || "Invalid application data" 
+      });
+    }
+  });
+  
+  app.get("/api/job-applications", async (_req, res) => {
+    try {
+      await connectToMongoDB();
+      const applications = await JobApplication.find().sort({ createdAt: -1 });
+      res.json(applications);
+    } catch (error: any) {
+      console.error('Error fetching applications:', error);
+      res.status(500).json({ 
+        error: error.message || "Failed to fetch applications" 
       });
     }
   });
