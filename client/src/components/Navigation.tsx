@@ -27,6 +27,7 @@ export function Navigation() {
     { href: "/", label: "Home" },
     { href: "/portfolio", label: "Portfolio" },
     { href: "/team", label: "Team" },
+    { href: "/blog", label: "Blog" },
     { href: "/career", label: "Career" },
     { href: "/faq", label: "FAQ" },
   ];

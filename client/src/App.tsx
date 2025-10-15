@@ -11,6 +11,8 @@ import Clients from "@/pages/Clients";
 import HireResources from "@/pages/HireResources";
 import FAQ from "@/pages/FAQ";
 import Team from "@/pages/Team";
+import Blog from "@/pages/Blog";
+import BlogDetail from "@/pages/BlogDetail";
 import WebDevelopment from "@/pages/services/WebDevelopment";
 import DevOps from "@/pages/services/DevOps";
 import Cloud from "@/pages/services/Cloud";
@@ -26,6 +28,8 @@ function Router() {
       <Route path="/career" component={Career} />
       <Route path="/faq" component={FAQ} />
       <Route path="/team" component={Team} />
+      <Route path="/blog" component={Blog} />
+      <Route path="/blog/:slug" component={BlogDetail} />
       <Route path="/clients" component={Clients} />
       <Route path="/hire-resources" component={HireResources} />
       <Route path="/services/web-development" component={WebDevelopment} />
