@@ -245,7 +245,11 @@ export default function Career() {
                     </div>
                   </div>
 
-                  <Button className="w-full group">
+                  <Button 
+                    className="w-full group"
+                    onClick={() => setIsDialogOpen(true)}
+                    data-testid={`button-apply-${job.title.toLowerCase().replace(/\s+/g, '-')}`}
+                  >
                     <span className="flex items-center gap-2">
                       Apply Now
                       <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
